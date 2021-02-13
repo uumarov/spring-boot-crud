@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${user.getFirstName() + ' ' + user.getLastName()}"></title>
+</head>
+<body>
+<div>
+    <form method="POST" th:action="@{'/admin/users/' + ${user.id == null ? 'add' : 'edit'}}" th:object="${user}">
+        <input th:field="*{id}" type="hidden">
+        <div>
+            <div>
+                <label>Username</label>
+                <input th:field="*{username}" type="text" placeholder="">
+            </div>
+            <div>
+                <label>Password</label>
+                <input th:field="*{password}" type="text" placeholder="">
+            </div>
+            <div>
+                <label>First Name</label>
+                <input th:field="*{firstName}" type="text" placeholder="">
+            </div>
+            <div>
+                <label>Last Name</label>
+                <input th:field="*{lastName}" type="text" placeholder="">
+            </div>
+            <div>
+                <label>E-mail</label>
+                <input th:field="*{email}" type="email" placeholder="">
+            </div>
+            <ul>
+                <li th:each="role : ${allRoles}">
+                    <input type="checkbox" th:field="*{roles}" th:value="${role}">
+                    <label th:for="${#ids.prev('roles')}"
+                           th:text="${role.getRole()}">Role</label>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button type="submit">Сохранить</button>
+        </div>
+    </form>
+</div>
+<div>
+    <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/logout}">Logout</a>
+    </li>
+</div>
+</body>
+</html>
