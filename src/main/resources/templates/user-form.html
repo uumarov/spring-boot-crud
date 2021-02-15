@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ru">
 <head>
     <meta charset="UTF-8">
     <title th:text="${user.getFirstName() + ' ' + user.getLastName()}"></title>
 </head>
 <body>
 <div>
-    <form method="POST" th:action="@{'/admin/users/' + ${user.id == null ? 'add' : 'edit'}}" th:object="${user}">
+    <form method="POST" th:action="@{'/admin/' + ${user.id == null ? 'add' : 'edit'}}" th:object="${user}">
         <input th:field="*{id}" type="hidden">
         <div>
             <div>

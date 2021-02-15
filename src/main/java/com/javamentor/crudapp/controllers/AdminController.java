@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/users")
+@RequestMapping("/admin")
 public class AdminController {
 
     private UserService userService;
@@ -32,7 +32,7 @@ public class AdminController {
     public String index(Model model) {
         List<User> users = userService.findAll();
         model.addAttribute("users", users);
-        return "userlist";
+        return "admin";
     }
 
     @GetMapping(value = "/edit/{id}")
@@ -56,18 +56,18 @@ public class AdminController {
     @PostMapping(value = "/add")
     public String userCreate(@ModelAttribute(name = "user") User user) {
         userService.save(user);
-        return "redirect:/admin/users";
+        return "redirect:/admin";
     }
 
     @PostMapping(value = "/edit")
     public String userSave(@ModelAttribute(name = "user") User user) {
         userService.save(user);
-        return "redirect:/admin/users";
+        return "redirect:/admin";
     }
 
     @GetMapping(value = "/delete/{id}")
     public String userAddForm(@PathVariable(name = "id") Long id) {
         userService.delete(id);
-        return "redirect:/admin/users";
+        return "redirect:/admin";
     }
 }

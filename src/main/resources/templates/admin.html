@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ru">
+<head th:replace="fragments/layout :: meta (pageTitle='Admin panel')">
+</head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+<div class="row">
+    <th:block th:replace="fragments/navigation :: navigation"></th:block>
+    <div th:insert="userlist :: userlist"></div>
+</div>
+<th:block th:replace="fragments/layout :: scripts">
+</th:block>
+</body>
+</html>
