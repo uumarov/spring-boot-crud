@@ -10,6 +10,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
           crossorigin="anonymous">
+
+    <style scoped>
+        .table-striped>tbody>tr:nth-child(even) {
+            background-color: #f0f0f1;
+        }
+        .table-striped>tbody>tr:nth-child(odd) {
+            background-color: #fdfdfe;
+        }
+    </style>
+
     <title th:text="${pageTitle}">Template title</title>
 
 </head>

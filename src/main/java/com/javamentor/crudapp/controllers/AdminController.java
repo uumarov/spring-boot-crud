@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -29,9 +30,14 @@ public class AdminController {
     }
 
     @GetMapping(value = "")
-    public String index(Model model) {
+    public String index(Model model, Principal principal) {
         List<User> users = userService.findAll();
+        List<Role> allRoles = roleService.findAll();
+        User currentUser = userService.findUserByUsername(principal.getName()).get();
         model.addAttribute("users", users);
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("user", new User());
+        model.addAttribute("allRoles", allRoles);
         return "admin";
     }
 

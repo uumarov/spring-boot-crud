@@ -39,6 +39,10 @@ public class Role implements GrantedAuthority {
         this.role = role;
     }
 
+    public String getRoleName() {
+        return role.replace("ROLE_", "");
+    }
+
     @Override
     public String getAuthority() {
         return role;

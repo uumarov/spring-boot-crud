@@ -1,32 +1,35 @@
-<th:block th:fragment="userlist" class="col-9">
-    <div>
-        <table>
-            <tr>
-                <th>Id</th>
-                <th>Username</th>
-                <th>FirstName</th>
-                <th>LastName</th>
-                <th>Email</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            <tr th:each="user : ${users}">
-                <td th:text="${user.getId()}"></td>
-                <td th:text="${user.getUsername()}"></td>
-                <td th:text="${user.getFirstName()}"></td>
-                <td th:text="${user.getLastName()}"></td>
-                <td th:text="${user.getEmail()}"></td>
-                <td><a th:href="@{'/admin/edit/' + ${user.getId()}}" th:text="edit"/></td>
-                <td><a th:href="@{'/admin/delete/' + ${user.getId()}}" th:text="delete"/></td>
-            </tr>
-        </table>
-    </div>
-    <div>
-        <a th:href="@{'/admin/add'}">Add user</a>
-    </div>
-    <div>
-        <li sec:authorize="isAuthenticated()">
-            <a th:href="@{/logout}">Logout</a>
-        </li>
+<th:block th:fragment="userlist">
+    <div class="card">
+        <h5 class="card-header">All users</h5>
+        <div class="card-body">
+            <div>
+                <table class="table table-striped">
+                    <tr>
+                        <th>ID</th>
+                        <th>FirstName</th>
+                        <th>LastName</th>
+                        <th>Age</th>
+                        <th>E-mail</th>
+                        <th>Roles</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.getId()}"></td>
+                        <td th:text="${user.getFirstName()}"></td>
+                        <td th:text="${user.getLastName()}"></td>
+                        <td th:text="${user.getAge()}"></td>
+                        <td th:text="${user.getUsername()}"></td>
+                        <td th:text="${user.getRolesString()}"></td>
+                        <td>
+                            <a th:href="@{'/admin/edit/' + ${user.getId()}}" th:text="Edit" class="btn btn-info"/>
+                        </td>
+                        <td>
+                            <a th:href="@{'/admin/delete/' + ${user.getId()}}" th:text="Delete" class="btn btn-danger"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </th:block>
