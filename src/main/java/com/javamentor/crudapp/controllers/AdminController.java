@@ -41,24 +41,6 @@ public class AdminController {
         return "main";
     }
 
-    @GetMapping(value = "/edit/{id}")
-    public String userEditForm(Model model, @PathVariable(name = "id") Long id) {
-        User user = userService.findOneById(id).get();
-        List<Role> allRoles = roleService.findAll();
-        model.addAttribute("user", user);
-        model.addAttribute("allRoles", allRoles);
-        return "user-form";
-    }
-
-    @GetMapping(value = "/add")
-    public String userAddForm(Model model) {
-        User user = new User();
-        List<Role> allRoles = roleService.findAll();
-        model.addAttribute("user", user);
-        model.addAttribute("allRoles", allRoles);
-        return "user-form";
-    }
-
     @PostMapping(value = "/add")
     public String userCreate(@ModelAttribute(name = "user") User user) {
         userService.save(user);
