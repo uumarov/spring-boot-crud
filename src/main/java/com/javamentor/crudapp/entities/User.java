@@ -1,5 +1,6 @@
 package com.javamentor.crudapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -21,6 +22,7 @@ public class User implements UserDetails, Serializable {
     private String email;
 
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     @Column(name = "first_name")
@@ -70,6 +72,7 @@ public class User implements UserDetails, Serializable {
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
     }
@@ -128,6 +131,7 @@ public class User implements UserDetails, Serializable {
         this.roles = roles;
     }
 
+    @JsonIgnore
     public String getRolesString() {
         return getRoles().stream().map(Role::getRoleName).collect(Collectors.joining(" "));
     }

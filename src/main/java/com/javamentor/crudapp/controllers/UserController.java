@@ -23,11 +23,11 @@ public class UserController {
 
     @GetMapping
     public String getUserPage(Model model, Principal principal) {
-        User user = (principal != null)
+        User currentUser = (principal != null)
                 ? (User) userService.loadUserByUsername(principal.getName())
                 : new User();
-        model.addAttribute("user", user);
-        return "user";
+        model.addAttribute("currentUser", currentUser);
+        return "main";
     }
 
 }

@@ -31,8 +31,8 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User findOneById(Long id) {
-        return userRepository.getOne(id);
+    public Optional<User> findOneById(Long id) {
+        return userRepository.findById(id);
     }
 
     @Transactional
@@ -41,9 +41,9 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void save(User user) {
+    public User save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Transactional

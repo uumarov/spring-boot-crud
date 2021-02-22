@@ -38,12 +38,12 @@ public class AdminController {
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("user", new User());
         model.addAttribute("allRoles", allRoles);
-        return "admin";
+        return "main";
     }
 
     @GetMapping(value = "/edit/{id}")
     public String userEditForm(Model model, @PathVariable(name = "id") Long id) {
-        User user = userService.findOneById(id);
+        User user = userService.findOneById(id).get();
         List<Role> allRoles = roleService.findAll();
         model.addAttribute("user", user);
         model.addAttribute("allRoles", allRoles);

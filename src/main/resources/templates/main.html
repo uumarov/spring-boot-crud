@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ru">
+<head th:replace="fragments/layout :: meta (pageTitle='Admin panel')">
+</head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+<div class="row vh-100">
+    <th:block th:replace="fragments/navigation :: navigation"></th:block>
+    <div class="bg-light col-9">
+        <div class="tab-content" id="v-pills-tabContent">
+            <div th:replace="fragments/admin :: admin-page" sec:authorize="hasRole('ADMIN')"></div>
+            <div th:replace="fragments/user :: user-page"></div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div th:replace="fragments/user-edit-modal :: modal" sec:authorize="hasRole('ADMIN')"></div>
+<th:block th:replace="fragments/layout :: scripts">
+</th:block>
+</body>
+</html>

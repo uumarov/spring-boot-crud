@@ -22,10 +22,14 @@
                         <td th:text="${user.getUsername()}"></td>
                         <td th:text="${user.getRolesString()}"></td>
                         <td>
-                            <a th:href="@{'/admin/edit/' + ${user.getId()}}" th:text="Edit" class="btn btn-info"/>
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#userEditModal" th:data-userid="${user.getId()}" data-action="edit">
+                                Edit
+                            </button>
                         </td>
                         <td>
-                            <a th:href="@{'/admin/delete/' + ${user.getId()}}" th:text="Delete" class="btn btn-danger"/>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#userEditModal" th:data-userid="${user.getId()}" data-action="delete">
+                                Delete
+                            </button>
                         </td>
                     </tr>
                 </table>
