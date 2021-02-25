@@ -55,7 +55,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public User update(User newUser, Long id) {
-        return findOneById(newUser.getId())
+        return findOneById(id)
                 .map(user -> {
                     user.setFirstName(newUser.getFirstName());
                     user.setLastName(newUser.getLastName());
