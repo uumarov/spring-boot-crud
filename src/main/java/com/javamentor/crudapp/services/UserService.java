@@ -42,8 +42,33 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public User save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getPassword() != null && !user.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         return userRepository.save(user);
+    }
+
+    @Transactional
+    public User update(User user) {
+        return userRepository.save(user);
+    }
+
+    @Transactional
+    public User update(User newUser, Long id) {
+        return findOneById(newUser.getId())
+                .map(user -> {
+                    user.setFirstName(newUser.getFirstName());
+                    user.setLastName(newUser.getLastName());
+                    user.setAge(newUser.getAge());
+                    user.setRoles(newUser.getRoles());
+                    user.setEmail(newUser.getEmail());
+                    if (newUser.getPassword() != null && !newUser.getPassword().isBlank()) {
+                        user.setPassword(newUser.getPassword());
+                        save(user);
+                    }
+                    return update(user);
+                })
+                .orElseGet(() -> save(newUser));
     }
 
     @Transactional

@@ -27,14 +27,20 @@ public class AdminRestController {
         return userService.save(newUser);
     }
 
+    @PutMapping("/users/edit/{id}")
+    public User editUser(@RequestBody User newUser, @PathVariable Long id) {
+        return userService.update(newUser, id);
+    }
+
     @GetMapping("/users/{id}")
     public User one(@PathVariable Long id) {
         return userService.findOneById(id).get();
     }
 
-    @DeleteMapping
+    @DeleteMapping("/users/delete/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.delete(id);
     }
+
 
 }
