@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ru">
 <head th:fragment="meta (pageTitle)">
 
     <!-- Required meta tags -->
@@ -13,11 +14,11 @@
 
     <style scoped>
         .table-striped > tbody > tr:nth-child(even) {
-            background-color: #f0f0f1;
+            background-color: #fdfdfe;
         }
 
         .table-striped > tbody > tr:nth-child(odd) {
-            background-color: #fdfdfe;
+            background-color: #f0f0f1;
         }
     </style>
 
@@ -34,6 +35,7 @@
             integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
             crossorigin="anonymous"></script>
     <script src="/app.js"></script>
+    <script src="/admin.js" sec:authorize="hasRole('ADMIN')"></script>
 </div>
 </body>
 </html>

@@ -17,3 +17,5 @@ spring:
     password: example
   thymeleaf:
     encoding: UTF-8
+
+defaultRoleName: ROLE_USER

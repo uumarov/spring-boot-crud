@@ -5,7 +5,10 @@ import com.javamentor.crudapp.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class RoleService {
@@ -16,11 +19,15 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
-    public List<Role> findAll() {
-        return roleRepository.findAll();
+    public Set<Role> findAll() {
+        return new HashSet<>(roleRepository.findAll());
     }
 
-    public Role findByName(String roleName) {
-        return roleRepository.getByRole(roleName);
+    public Optional<Role> findByName(String roleName) {
+        return roleRepository.findByRole(roleName);
+    }
+
+    public Set<Role> findAllByNameIn(Collection<String> roleNames) {
+        return roleRepository.findAllByRoleIn(roleNames);
     }
 }

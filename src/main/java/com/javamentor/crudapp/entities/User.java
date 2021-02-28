@@ -1,7 +1,8 @@
 package com.javamentor.crudapp.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.javamentor.crudapp.services.converter.RoleDeserializer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 @Entity
@@ -38,7 +40,8 @@ public class User implements UserDetails, Serializable {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles = new ArrayList<>();
+    @JsonDeserialize(using = RoleDeserializer.class)
+    private Collection<Role> roles = new HashSet<>();
 
     public User() {
     }
@@ -52,21 +55,25 @@ public class User implements UserDetails, Serializable {
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }
@@ -78,6 +85,7 @@ public class User implements UserDetails, Serializable {
     }
 
     @Override
+    @JsonIgnore
     public String getUsername() {
         return getEmail();
     }
@@ -132,8 +140,9 @@ public class User implements UserDetails, Serializable {
         this.roles = roles;
     }
 
-    @JsonIgnore
+    @JsonProperty
     public String getRolesString() {
+
         return getRoles().stream().map(Role::getRoleName).collect(Collectors.joining(" "));
     }
 

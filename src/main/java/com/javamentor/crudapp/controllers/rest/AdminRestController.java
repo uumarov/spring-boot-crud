@@ -1,20 +1,29 @@
 package com.javamentor.crudapp.controllers.rest;
 
+import com.javamentor.crudapp.entities.Role;
 import com.javamentor.crudapp.entities.User;
+import com.javamentor.crudapp.services.RoleService;
 import com.javamentor.crudapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/admin")
 public class AdminRestController {
     private UserService userService;
+    private RoleService roleService;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
     }
 
     @GetMapping("/users")
@@ -40,6 +49,11 @@ public class AdminRestController {
     @DeleteMapping("/users/delete/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.delete(id);
+    }
+
+    @GetMapping("/roles")
+    public Set<Role> allRoles() {
+        return roleService.findAll();
     }
 
 

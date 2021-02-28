@@ -17,6 +17,6 @@ public class RoleConverter implements Converter<String, Role> {
 
     @Override
     public Role convert(String roleName) {
-        return roleService.findByName(roleName);
+        return roleService.findByName(roleName).get();
     }
 }

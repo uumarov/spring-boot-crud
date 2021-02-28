@@ -1,11 +1,12 @@
 <header th:fragment="header">
     <ul class="nav bg-dark justify-content-between">
         <li class="nav-item">
-            <span class="navbar-text text-light font-weight-bolder ml-3" th:text="${currentUser.getUsername()}"></span>
-            <span class="navbar-text text-light" th:text="'with roles: ' + ${currentUser.getRolesString()}"></span>
+            <span class="navbar-text text-light font-weight-bolder ml-3 current-user-email"></span>
+            <span class="navbar-text text-light"> with roles: </span>
+            <span class="navbar-text text-light current-user-roles"></span>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-secondary active" th:href="@{/logout}">Logout</a>
+            <a class="nav-link text-secondary active" href="/logout">Logout</a>
         </li>
     </ul>
 </header>
