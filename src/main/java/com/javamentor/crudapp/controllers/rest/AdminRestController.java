@@ -43,8 +43,8 @@ public class AdminRestController {
 
     @PutMapping("/users/edit/{id}")
     public ResponseEntity<User> editUser(@RequestBody User newUser, @PathVariable Long id) {
-        System.out.println(userService.updateWithQuery(newUser, id));
-        return new ResponseEntity<>(HttpStatus.OK);
+        User user = userService.update(newUser, id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")

@@ -1,6 +1,5 @@
 package com.javamentor.crudapp.services;
 
-import com.javamentor.crudapp.entities.Role;
 import com.javamentor.crudapp.entities.User;
 import com.javamentor.crudapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -52,11 +49,6 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User update(User user) {
-        return userRepository.save(user);
-    }
-
-    @Transactional
     public User update(User newUser, Long id) {
         return findOneById(id)
                 .map(user -> {
@@ -66,23 +58,12 @@ public class UserService implements UserDetailsService {
                     user.setRoles(newUser.getRoles());
                     user.setEmail(newUser.getEmail());
                     if (newUser.getPassword() != null && !newUser.getPassword().isBlank()) {
-                        user.setPassword(newUser.getPassword());
-                        save(user);
+                        user.setPassword(passwordEncoder.encode(newUser.getPassword()));
+                        userRepository.save(user);
                     }
-                    return update(user);
+                    return userRepository.save(user);
                 })
-                .orElseGet(() -> save(newUser));
-    }
-
-    @Transactional
-    public int updateWithQuery(User newUser, Long id) {
-        String password = (newUser.getPassword() != null && !newUser.getPassword().isBlank())
-                ? passwordEncoder.encode(newUser.getPassword())
-                : null;
-        System.out.println(password);
-        userRepository.update(newUser, password, id);
-        userRepository.updateUserRoles(newUser.getRoles(), id);
-        return 1;
+                .orElseGet(() -> userRepository.save(newUser));
     }
 
     @Transactional
@@ -103,7 +84,6 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.getAuthorities());
+        return findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
     }
 }

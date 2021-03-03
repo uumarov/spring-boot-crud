@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
-@DynamicUpdate
 public class User implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
