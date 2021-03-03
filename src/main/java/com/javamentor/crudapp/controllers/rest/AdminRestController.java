@@ -5,9 +5,12 @@ import com.javamentor.crudapp.entities.User;
 import com.javamentor.crudapp.services.RoleService;
 import com.javamentor.crudapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -27,33 +30,42 @@ public class AdminRestController {
     }
 
     @GetMapping("/users")
-    public List<User> all() {
-        return userService.findAll();
+    public ResponseEntity<List<User>> all() {
+        List<User> users = userService.findAll();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PostMapping("/users")
-    public User newUser(@RequestBody User newUser) {
-        return userService.save(newUser);
+    public ResponseEntity<User> newUser(@RequestBody User newUser) {
+        User user = userService.save(newUser);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     @PutMapping("/users/edit/{id}")
-    public User editUser(@RequestBody User newUser, @PathVariable Long id) {
-        return userService.update(newUser, id);
+    public ResponseEntity<User> editUser(@RequestBody User newUser, @PathVariable Long id) {
+        System.out.println(userService.updateWithQuery(newUser, id));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
-    public User one(@PathVariable Long id) {
-        return userService.findOneById(id).get();
+    public ResponseEntity<User> one(@PathVariable Long id) {
+        Optional<User> userOptional = userService.findOneById(id);
+        if (userOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
     }
 
     @DeleteMapping("/users/delete/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/roles")
-    public Set<Role> allRoles() {
-        return roleService.findAll();
+    public ResponseEntity<Set<Role>> allRoles() {
+        Set<Role> allRoles = roleService.findAll();
+        return new ResponseEntity<>(allRoles, HttpStatus.OK);
     }
 
 
